@@ -1,0 +1,29 @@
+all: filler.o reader.o configurator.o print_debug.o
+	gcc -o filler filler.o
+	gcc -o reader reader.o
+	gcc -o configurator configurator.o
+	gcc -o print_debug print_debug.o
+
+filler.o: filler.c
+	gcc -c -o filler.o filler.c
+
+reader.o: reader.c
+	gcc -c -o reader.o reader.c 
+
+configuration.o: configuration.c
+	gcc -c -o configurator.o configurator.c
+
+print_debug.o: print_debug.c
+	gcc -c -o print_debug.o print_debug.c
+
+clean_exe:
+	rm -f configurator
+	rm -f reader
+	rm -f filler
+	rm -f print_debug
+
+clean_obj:
+	rm -f configurator.o
+	rm -f reader.o
+	rm -f filler.o
+	rm -f print_debug.o

@@ -1,0 +1,50 @@
+//The code is heavily commented with explanation of each step , this is higher level overview of file structure
+
+
+//The driver assumes that user would see only return codes
+
+//To see error log and queue instance use ./print_debug then dmesg 
+
+//Each and every log is at kernel level use dmesg anytime to see the status of queue
+
+
+queue.h --> Contains circular queue implementation , NO queue.c file to make process simple
+
+ioctl.c -> containts char kernel driver implmentation
+ioctl.h -> header for ioctl.c
+
+
+filler.c -> each run of ./filler would push data into queue once, if full, the process get blocked until !full(Q)
+
+reader.c -> each run of ./reader would pop once , if empty , the process gets blocked until size(Q)>=1
+
+configurator.c --> initializes the queue with a size , if rerun with different size 
+
+//if new_size > old size --> new data is allocated with new queue having size as new_size and old data copied
+//if new_size <old size --> kernel level log print that not possible as size is less to accomodate old data
+
+print_debug.c --> ./print_debug , prints the current status of queue in kernel level log ,
+
+run ./print_debug and then dmesg to see the current queue structure
+
+Screenshot of a demo test unit attached
+
+
+
+//HOW TO RUN
+
+make -f Makefile clean //cleans all previous builds
+make -f Makefile all //build ioctl kernel module .ko file
+
+sudo rmmod ioctl.ko
+sudo insmod ioctl.ko
+
+sudo mknod /dev/shubham c 64 0
+
+
+//to compile , filler.c , configurator.c , reader.c
+
+make -f Makefile1 clean
+make -f Makefile1 all
+
+
